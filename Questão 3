@@ -1,0 +1,38 @@
+import json
+
+def analisar_faturamento(arquivo):
+    """
+    Analisa os dados de faturamento de um arquivo JSON.
+
+    Args:
+        arquivo: Nome do arquivo JSON.
+
+    Returns:
+        tuple: Uma tupla contendo o menor valor, o maior valor e o número de dias acima da média.
+    """
+
+    with open(arquivo, 'r') as f:
+        dados = json.load(f)
+
+    faturamentos = [dia['valor'] for dia in dados if dia['valor'] > 0]
+
+    if not faturamentos:
+        return None, None, 0
+
+    media = sum(faturamentos) / len(faturamentos)
+    menor = min(faturamentos)
+    maior = max(faturamentos)
+    acima_media = sum(1 for valor in faturamentos if valor > media)
+
+    return menor, maior, acima_media
+
+# Exemplo de uso:
+arquivo_json = "faturamento.json"  # Substitua pelo nome do seu arquivo
+menor, maior, dias_acima_media = analisar_faturamento(arquivo_json)
+
+if menor is not None:
+    print(f"Menor valor de faturamento: R$ {menor:.2f}")
+    print(f"Maior valor de faturamento: R$ {maior:.2f}")
+    print(f"Número de dias com faturamento acima da média: {dias_acima_media}")
+else:
+    print("Não há dados de faturamento válidos.")
