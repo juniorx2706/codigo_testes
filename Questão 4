@@ -1,0 +1,31 @@
+def calcular_percentual_faturamento(dados):
+  """Calcula o percentual de faturamento por estado.
+
+  Args:
+    dados: Um dicionário onde as chaves são os estados e os valores são os faturamentos.
+
+  Returns:
+    Um dicionário com os estados como chaves e os percentuais como valores.
+  """
+
+  faturamento_total = sum(dados.values())
+  percentuais = {}
+  for estado, valor in dados.items():
+    percentuais[estado] = (valor / faturamento_total) * 100
+  return percentuais
+
+# Dados do exemplo
+dados = {
+  'SP': 67836.43,
+  'RJ': 36678.66,
+  'MG': 29229.88,
+  'ES': 27165.48,
+  'Outros': 19849.53
+}
+
+# Calculando os percentuais
+resultados = calcular_percentual_faturamento(dados)
+
+# Imprimindo os resultados
+for estado, percentual in resultados.items():
+  print(f"O estado {estado} representou {percentual:.2f}% do faturamento total.")
